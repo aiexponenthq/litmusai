@@ -1,0 +1,27 @@
+{
+  "ruleset_version": "acme-corp-v1.0",
+  "regulation": "Regulation (EU) 2024/1689",
+  "effective_date": "2025-02-02",
+  "rules": [
+    {
+      "id": "rule_a_influences_behaviour",
+      "category": "5.1.a",
+      "version": "v1",
+      "description": "System output attempts to influence user behaviour.",
+      "expression": "system.outputs.behaviour_predictions == true",
+      "verdict_if_triggered": "amber",
+      "citations": ["Art. 5(1)(a)"],
+      "reviewed_by": "Smith & Co LLP",
+      "reviewed_date": "2026-05-01"
+    }
+  ],
+  "signature": {
+    "signer_name": "Smith & Co LLP",
+    "signer_bar_number": "BAR-EU-12345",
+    "signer_firm": "Smith & Co LLP",
+    "signer_email": "partners@smithco.example",
+    "signed_date": "2026-05-01",
+    "signature_algorithm": "sha256",
+    "signature_value": "deadbeefcafebabe0123456789abcdef0123456789abcdef0123456789abcdef"
+  }
+}

@@ -43,5 +43,6 @@ import litmusai.cli.commands.debug as _debug  # noqa: F401, E402
 import litmusai.cli.commands.export as _export  # noqa: F401, E402
 import litmusai.cli.commands.init as _init  # noqa: F401, E402
 import litmusai.cli.commands.portfolio as _portfolio  # noqa: F401, E402
+import litmusai.cli.commands.ruleset_mgmt as _ruleset_mgmt  # noqa: F401, E402
 import litmusai.cli.commands.screen as _screen  # noqa: F401, E402
 import litmusai.cli.commands.verify as _verify  # noqa: F401, E402

@@ -178,6 +178,72 @@
       "citations": ["Art. 5(1)(d)", "Recital 42"],
       "reviewed_by": "aiexponent-internal-panel-v1",
       "reviewed_date": "2026-04-16"
+    },
+    {
+      "id": "rule_g_biometric_sensitive_classification",
+      "category": "5.1.g",
+      "version": "v1",
+      "description": "System categorises individuals based on biometric data to infer sensitive attributes (race, political opinions, religious beliefs, sexual orientation).",
+      "expression": "system.inputs.biometric == true and system.outputs.sensitive_attribute_classifications == true",
+      "verdict_if_triggered": "red",
+      "citations": ["Art. 5(1)(g)", "Recital 44"],
+      "reviewed_by": "aiexponent-internal-panel-v1",
+      "reviewed_date": "2026-04-16"
+    },
+    {
+      "id": "rule_g_facial_sensitive_classification",
+      "category": "5.1.g",
+      "version": "v1",
+      "description": "System uses facial images to infer sensitive attributes.",
+      "expression": "system.inputs.facial_images == true and system.outputs.sensitive_attribute_classifications == true",
+      "verdict_if_triggered": "red",
+      "citations": ["Art. 5(1)(g)", "Recital 44"],
+      "reviewed_by": "aiexponent-internal-panel-v1",
+      "reviewed_date": "2026-04-16"
+    },
+    {
+      "id": "rule_g_sensitive_classification_general",
+      "category": "5.1.g",
+      "version": "v1",
+      "description": "System classifies sensitive attributes from any input — requires review.",
+      "expression": "system.outputs.sensitive_attribute_classifications == true",
+      "verdict_if_triggered": "amber",
+      "citations": ["Art. 5(1)(g)"],
+      "reviewed_by": "aiexponent-internal-panel-v1",
+      "reviewed_date": "2026-04-16"
+    },
+    {
+      "id": "rule_h_realtime_rbi_public_space",
+      "category": "5.1.h",
+      "version": "v1",
+      "description": "Real-time remote biometric identification in publicly accessible spaces.",
+      "expression": "system.inputs.biometric == true and system.deployment_context.public_space == true and system.deployment_context.real_time_operation == true",
+      "verdict_if_triggered": "red",
+      "citations": ["Art. 5(1)(h)", "Recital 33"],
+      "reviewed_by": "aiexponent-internal-panel-v1",
+      "reviewed_date": "2026-04-16"
+    },
+    {
+      "id": "rule_h_facial_public_realtime",
+      "category": "5.1.h",
+      "version": "v1",
+      "description": "Real-time facial recognition in publicly accessible spaces.",
+      "expression": "system.inputs.facial_images == true and system.deployment_context.public_space == true and system.deployment_context.real_time_operation == true",
+      "verdict_if_triggered": "red",
+      "citations": ["Art. 5(1)(h)", "Recital 33"],
+      "reviewed_by": "aiexponent-internal-panel-v1",
+      "reviewed_date": "2026-04-16"
+    },
+    {
+      "id": "rule_h_law_enforcement_rbi_exception",
+      "category": "5.1.h",
+      "version": "v1",
+      "description": "Biometric ID in public spaces by law enforcement — narrow exception exists but requires legal review.",
+      "expression": "system.inputs.biometric == true and system.deployment_context.public_space == true and system.deployment_context.law_enforcement_use == true",
+      "verdict_if_triggered": "amber",
+      "citations": ["Art. 5(1)(h)", "Art. 5(2)", "Art. 5(3)", "Recital 33"],
+      "reviewed_by": "aiexponent-internal-panel-v1",
+      "reviewed_date": "2026-04-16"
     }
   ],
   "signature": null

@@ -36,14 +36,78 @@ litmus screen system.yaml      # full screening with all 8 categories
 litmus export report.json --format pdf
 ```
 
+## How It Works
+
+```mermaid
+graph LR
+    A["system.yaml<br/>or --describe"] --> B["Parse +<br/>Validate"]
+    B --> C["Rule Engine<br/>(22 rules)"]
+    C --> D{"Per-category<br/>verdict"}
+    D -->|RED| E["Prohibition<br/>likely"]
+    D -->|AMBER| F["Legal review<br/>required"]
+    D -->|CLEAR| G["No indicators<br/>found"]
+
+    style A fill:#FCFCFA,color:#0F1419,stroke:#E4E2DC
+    style B fill:#FCFCFA,color:#0F1419,stroke:#E4E2DC
+    style C fill:#0D5463,color:#FCFCFA,stroke:#0D5463
+    style D fill:#F5F4EF,color:#0F1419,stroke:#E4E2DC
+    style E fill:#9D2929,color:#FCFCFA,stroke:#9D2929
+    style F fill:#B8791C,color:#FCFCFA,stroke:#B8791C
+    style G fill:#0B7A4B,color:#FCFCFA,stroke:#0B7A4B
+```
+
 ## What LitmusAI Does
 
-- Screens AI systems against all 8 categories of Article 5(1)(a)–(h)
-- Produces **deterministic** verdicts: same input → same output, always
-- Generates audit-ready reports (JSON, SARIF, Markdown, PDF)
-- Runs in CI/CD as a pre-merge gate (GitHub Action included)
+- Screens AI systems against all 8 categories of Article 5(1)(a)-(h)
+- Produces **deterministic** verdicts: same input = same output, always
+- Generates audit-ready reports (JSON, SARIF, Markdown)
+- Runs in CI/CD as a pre-merge gate ([GitHub Action](.github/actions/litmusai-screen/) included)
 - Works **fully offline** — zero network calls, zero telemetry
-- Supports **Bring-Your-Own-Ruleset** — plug in your lawyer's signed interpretation
+- Supports **[Bring-Your-Own-Ruleset](docs/ruleset-authoring.md)** — plug in your lawyer's signed interpretation
+
+## Article 5 Categories Covered
+
+| Category | Prohibition | Verdict logic |
+|----------|------------|---------------|
+| 5.1.a | Harmful manipulation | RED if subliminal + behaviour change |
+| 5.1.b | Exploitation of vulnerabilities | RED if targeting minors/vulnerable + behaviour predictions |
+| 5.1.c | Social scoring | RED if individual scores + behaviour history |
+| 5.1.d | Criminal risk prediction | RED if profiling-based criminal risk output |
+| 5.1.e | Untargeted facial scraping | RED if facial images + scraped data |
+| 5.1.f | Emotion inference (work/education) | RED in workplace/education; AMBER in healthcare |
+| 5.1.g | Biometric categorisation | RED if biometric + sensitive attribute classification |
+| 5.1.h | Real-time remote biometric ID | RED if biometric + public space + real-time |
+
+## CI/CD Integration
+
+```yaml
+# .github/workflows/article5.yml
+- uses: aiexponenthq/litmusai/.github/actions/litmusai-screen@v1
+  with:
+    path: system.yaml
+    fail-on: amber
+```
+
+## Commands
+
+| Command | Description |
+|---------|-------------|
+| `litmus init` | Create starter system.yaml |
+| `litmus screen` | Screen a system (YAML or `--describe`) |
+| `litmus verify` | Check report hash integrity |
+| `litmus portfolio` | Batch screen a directory |
+| `litmus export` | Export to JSON, Markdown, or SARIF |
+| `litmus debug` | Show rule-firing trace |
+| `litmus use-ruleset` | Set a custom BYO ruleset |
+| `litmus verify-ruleset` | Validate a ruleset file |
+| `litmus ruleset-info` | Show active ruleset provenance |
+
+## Documentation
+
+- [Getting Started](docs/getting-started.md)
+- [Article 5 Coverage](docs/article-5-coverage.md)
+- [Bring Your Own Ruleset](docs/ruleset-authoring.md)
+- [CI Integration](docs/ci-integration.md)
 
 ## Important Disclaimers
 

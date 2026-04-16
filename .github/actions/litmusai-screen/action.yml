@@ -1,0 +1,73 @@
+name: "LitmusAI Screen"
+description: "Screen an AI system against Article 5 of the EU AI Act."
+author: "AiExponent LLC"
+
+inputs:
+  path:
+    description: "Path to system.yaml file."
+    required: true
+  fail-on:
+    description: "Fail the build on this verdict or worse. Options: red, amber, none."
+    required: false
+    default: "red"
+  output-format:
+    description: "Output format: json or sarif."
+    required: false
+    default: "json"
+  ruleset:
+    description: "Path to a custom ruleset JSON file (optional)."
+    required: false
+    default: ""
+  python-version:
+    description: "Python version to use."
+    required: false
+    default: "3.11"
+
+outputs:
+  verdict:
+    description: "Overall screening verdict (clear, amber, red)."
+    value: ${{ steps.screen.outputs.verdict }}
+  report-path:
+    description: "Path to the generated report file."
+    value: ${{ steps.screen.outputs.report_path }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Install LitmusAI
+      shell: bash
+      run: pip install litmusai
+
+    - name: Run screening
+      id: screen
+      shell: bash
+      env:
+        LITMUS_PATH: ${{ inputs.path }}
+        LITMUS_FAIL_ON: ${{ inputs.fail-on }}
+        LITMUS_FORMAT: ${{ inputs.output-format }}
+        LITMUS_RULESET: ${{ inputs.ruleset }}
+      run: |
+        REPORT_PATH="litmusai-report.$LITMUS_FORMAT"
+        RULESET_FLAG=""
+        if [ -n "$LITMUS_RULESET" ]; then
+          RULESET_FLAG="--ruleset $LITMUS_RULESET"
+        fi
+
+        litmus screen "$LITMUS_PATH" \
+          --output "$REPORT_PATH" \
+          --fail-on "$LITMUS_FAIL_ON" \
+          $RULESET_FLAG \
+          --quiet || EXIT_CODE=$?
+
+        # Extract verdict from JSON report
+        VERDICT=$(python3 -c "import json; print(json.load(open('$REPORT_PATH'))['summary']['overall_verdict'])" 2>/dev/null || echo "unknown")
+
+        echo "verdict=$VERDICT" >> "$GITHUB_OUTPUT"
+        echo "report_path=$REPORT_PATH" >> "$GITHUB_OUTPUT"
+
+        exit ${EXIT_CODE:-0}
