@@ -1,0 +1,15 @@
+name: "RecidivismRiskEngine"
+version: "3.1.0"
+provider: "JusticeTech"
+purpose: "Predict recidivism risk for individual offenders."
+system_description: "Criminal risk scoring for courts based on profiling."
+deployment_jurisdictions: ["EU"]
+output_consumed_in_eu: true
+subject_population:
+  categories: ["general_public"]
+inputs:
+  behaviour_history: true
+outputs:
+  criminal_risk_predictions: true
+deployment_context: {}
+mitigations: []

@@ -1,4 +1,4 @@
-"""LitmusAI CLI entry point (Phase 1 shell — commands added in Phase 3)."""
+"""LitmusAI CLI entry point — all commands registered here."""
 
 from __future__ import annotations
 
@@ -36,3 +36,12 @@ def main(
 
     Not legal advice. Not a notified body.
     """
+
+
+# Register commands — imported after app is defined to avoid circular imports.
+import litmusai.cli.commands.debug as _debug  # noqa: F401, E402
+import litmusai.cli.commands.export as _export  # noqa: F401, E402
+import litmusai.cli.commands.init as _init  # noqa: F401, E402
+import litmusai.cli.commands.portfolio as _portfolio  # noqa: F401, E402
+import litmusai.cli.commands.screen as _screen  # noqa: F401, E402
+import litmusai.cli.commands.verify as _verify  # noqa: F401, E402

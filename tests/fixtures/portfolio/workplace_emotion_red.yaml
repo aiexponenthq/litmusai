@@ -1,0 +1,16 @@
+name: "EmployeeSentimentTracker"
+version: "1.0.0"
+provider: "HRTech Co"
+purpose: "Monitor employee engagement via facial expression analysis."
+system_description: "Emotion tracking in office environment."
+deployment_jurisdictions: ["EU"]
+output_consumed_in_eu: true
+subject_population:
+  categories: ["workers"]
+inputs:
+  emotional_state_inference: true
+outputs:
+  emotion_inferences: true
+deployment_context:
+  workplace: true
+mitigations: []

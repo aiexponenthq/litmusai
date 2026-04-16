@@ -161,7 +161,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**" = ["S101", "S106", "S311"]
+"tests/**" = ["S101", "S106", "S311", "S603"]
 "src/litmusai/engine/expression.py" = ["S307"]  # only if we ever touch eval — explicit opt-in
 
 [tool.ruff.format]

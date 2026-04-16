@@ -1,0 +1,15 @@
+name: "KidsBehaviourPredictor"
+version: "1.0.0"
+provider: "SocialMediaCo"
+purpose: "Predict teenager engagement for social media feed ranking."
+system_description: "Youth engagement predictor targeting minors."
+deployment_jurisdictions: ["EU"]
+output_consumed_in_eu: true
+subject_population:
+  categories: ["minors"]
+inputs:
+  behaviour_history: true
+outputs:
+  behaviour_predictions: true
+deployment_context: {}
+mitigations: []

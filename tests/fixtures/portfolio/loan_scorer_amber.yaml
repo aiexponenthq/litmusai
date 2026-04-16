@@ -1,0 +1,15 @@
+name: "LoanRiskScorer"
+version: "2.0.0"
+provider: "FinTech Ltd"
+purpose: "Automated credit scoring for retail loan applications."
+system_description: "ML-based loan approval scoring."
+deployment_jurisdictions: ["EU"]
+output_consumed_in_eu: true
+subject_population:
+  categories: ["general_public"]
+inputs: {}
+outputs:
+  individual_scores: true
+deployment_context:
+  financial_services: true
+mitigations: ["human_review", "appeal_process"]

@@ -1,0 +1,16 @@
+name: "ClinicalMoodAssist"
+version: "1.0.0"
+provider: "MedAI"
+purpose: "Pain assessment via facial expression in ICU."
+system_description: "Medical emotion inference for patient care."
+deployment_jurisdictions: ["EU"]
+output_consumed_in_eu: true
+subject_population:
+  categories: ["general_public"]
+inputs:
+  emotional_state_inference: true
+outputs:
+  emotion_inferences: true
+deployment_context:
+  healthcare: true
+mitigations: ["clinical_oversight", "patient_consent"]

@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from datetime import UTC, datetime
-from typing import Any, Literal, Sequence
+from typing import Any, Literal
 
 from litmusai import __version__
 from litmusai.engine.expression import ExpressionError, evaluate
@@ -76,7 +77,7 @@ def _aggregate_confidence(confidences: Sequence[str]) -> Confidence:
     order = {"low": 0, "medium": 1, "high": 2}
     if not confidences:
         return "high"
-    result = min(confidences, key=lambda c: order.get(c, 0))
+    result: str = min(confidences, key=lambda c: order.get(c, 0))
     return result  # type: ignore[return-value]
 
 

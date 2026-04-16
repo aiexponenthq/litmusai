@@ -1,0 +1,16 @@
+name: "TeenTalkBot"
+version: "1.0.0"
+provider: "EduAI"
+purpose: "Mental health chatbot for teenagers."
+system_description: "AI chatbot providing mental health support to teens."
+deployment_jurisdictions: ["EU"]
+output_consumed_in_eu: true
+subject_population:
+  categories: ["minors", "persons_in_vulnerable_economic_situations"]
+inputs:
+  freetext_prompts: true
+outputs:
+  freetext_generations: true
+deployment_context:
+  education: true
+mitigations: ["human_review"]

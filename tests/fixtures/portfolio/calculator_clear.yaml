@@ -1,0 +1,13 @@
+name: "SimpleCalc"
+version: "1.0.0"
+provider: "MathTools Inc"
+purpose: "Basic arithmetic calculator for adults."
+system_description: "A stateless calculator. No personal data, no ML."
+deployment_jurisdictions: ["EU"]
+output_consumed_in_eu: true
+subject_population:
+  categories: ["general_public"]
+inputs: {}
+outputs: {}
+deployment_context: {}
+mitigations: []

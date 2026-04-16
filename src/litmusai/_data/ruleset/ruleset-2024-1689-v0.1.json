@@ -158,6 +158,17 @@
       "reviewed_date": "2026-04-16"
     },
     {
+      "id": "rule_b_targets_minors_freetext",
+      "category": "5.1.b",
+      "version": "v1",
+      "description": "System generates freetext output targeting minors — potential exploitation of age-based vulnerability.",
+      "expression": "targets_population(system, \"minors\") and system.outputs.freetext_generations == true",
+      "verdict_if_triggered": "amber",
+      "citations": ["Art. 5(1)(b)", "Recital 32"],
+      "reviewed_by": "aiexponent-internal-panel-v1",
+      "reviewed_date": "2026-04-16"
+    },
+    {
       "id": "rule_d_criminal_risk",
       "category": "5.1.d",
       "version": "v1",
