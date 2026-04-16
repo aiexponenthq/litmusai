@@ -2,26 +2,26 @@
 
 from __future__ import annotations
 
-import re
 from datetime import date
-from typing import Literal, Optional
 
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import BaseModel, Field, field_validator
 
-_POPULATION_CATEGORIES = frozenset({
-    "general_public",
-    "minors",
-    "workers",
-    "students",
-    "persons_with_disabilities",
-    "persons_in_vulnerable_economic_situations",
-    "other",
-})
+_POPULATION_CATEGORIES = frozenset(
+    {
+        "general_public",
+        "minors",
+        "workers",
+        "students",
+        "persons_with_disabilities",
+        "persons_in_vulnerable_economic_situations",
+        "other",
+    }
+)
 
 
 class SubjectPopulation(BaseModel, extra="forbid"):
     categories: list[str] = Field(..., min_length=1)
-    notes: Optional[str] = None
+    notes: str | None = None
 
     @field_validator("categories")
     @classmethod
@@ -43,7 +43,7 @@ class SystemInputs(BaseModel, extra="forbid"):
     behaviour_history: bool = False
     scraped_internet_data: bool = False
     freetext_prompts: bool = False
-    other: Optional[str] = None
+    other: str | None = None
 
 
 class SystemOutputs(BaseModel, extra="forbid"):
@@ -53,7 +53,7 @@ class SystemOutputs(BaseModel, extra="forbid"):
     emotion_inferences: bool = False
     sensitive_attribute_classifications: bool = False
     freetext_generations: bool = False
-    other: Optional[str] = None
+    other: str | None = None
 
 
 class DeploymentContext(BaseModel, extra="forbid"):
@@ -64,20 +64,20 @@ class DeploymentContext(BaseModel, extra="forbid"):
     law_enforcement_use: bool = False
     healthcare: bool = False
     financial_services: bool = False
-    other: Optional[str] = None
+    other: str | None = None
 
 
 class Metadata(BaseModel, extra="forbid"):
-    last_reviewed: Optional[date] = None
-    owner: Optional[str] = None
-    reviewed_by: Optional[str] = None
+    last_reviewed: date | None = None
+    owner: str | None = None
+    reviewed_by: str | None = None
 
 
 class SystemDescription(BaseModel, extra="forbid"):
     name: str = Field(..., min_length=1)
     version: str = Field(..., min_length=1)
     provider: str = Field(..., min_length=1)
-    deployer: Optional[str] = None
+    deployer: str | None = None
     purpose: str = Field(..., min_length=1)
     system_description: str = Field(..., min_length=1)
     deployment_jurisdictions: list[str] = Field(..., min_length=1)

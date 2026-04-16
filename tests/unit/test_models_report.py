@@ -6,7 +6,7 @@ FR-36 (ruleset provenance header), NFR-6 (determinism).
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 import pytest
@@ -273,7 +273,7 @@ class TestOverrideEntry:
             rationale="Legal team confirmed no subliminal techniques present.",
             approver="Jane Counsel",
             approver_email="jane@example.org",
-            approved_at=datetime(2026, 4, 15, tzinfo=timezone.utc),
+            approved_at=datetime(2026, 4, 15, tzinfo=UTC),
         )
         assert o.verdict_before == "amber"
         assert o.approver_email == "jane@example.org"
@@ -287,5 +287,5 @@ class TestOverrideEntry:
                 rationale="…",
                 approver="x",
                 approver_email="not-an-email",
-                approved_at=datetime(2026, 4, 15, tzinfo=timezone.utc),
+                approved_at=datetime(2026, 4, 15, tzinfo=UTC),
             )

@@ -1,0 +1,349 @@
+{
+  "$defs": {
+    "DeploymentContext": {
+      "additionalProperties": false,
+      "properties": {
+        "workplace": {
+          "default": false,
+          "title": "Workplace",
+          "type": "boolean"
+        },
+        "education": {
+          "default": false,
+          "title": "Education",
+          "type": "boolean"
+        },
+        "public_space": {
+          "default": false,
+          "title": "Public Space",
+          "type": "boolean"
+        },
+        "real_time_operation": {
+          "default": false,
+          "title": "Real Time Operation",
+          "type": "boolean"
+        },
+        "law_enforcement_use": {
+          "default": false,
+          "title": "Law Enforcement Use",
+          "type": "boolean"
+        },
+        "healthcare": {
+          "default": false,
+          "title": "Healthcare",
+          "type": "boolean"
+        },
+        "financial_services": {
+          "default": false,
+          "title": "Financial Services",
+          "type": "boolean"
+        },
+        "other": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Other"
+        }
+      },
+      "title": "DeploymentContext",
+      "type": "object"
+    },
+    "Metadata": {
+      "additionalProperties": false,
+      "properties": {
+        "last_reviewed": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Last Reviewed"
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Owner"
+        },
+        "reviewed_by": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reviewed By"
+        }
+      },
+      "title": "Metadata",
+      "type": "object"
+    },
+    "SubjectPopulation": {
+      "additionalProperties": false,
+      "properties": {
+        "categories": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Categories",
+          "type": "array"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        }
+      },
+      "required": [
+        "categories"
+      ],
+      "title": "SubjectPopulation",
+      "type": "object"
+    },
+    "SystemInputs": {
+      "additionalProperties": false,
+      "properties": {
+        "biometric": {
+          "default": false,
+          "title": "Biometric",
+          "type": "boolean"
+        },
+        "facial_images": {
+          "default": false,
+          "title": "Facial Images",
+          "type": "boolean"
+        },
+        "emotional_state_inference": {
+          "default": false,
+          "title": "Emotional State Inference",
+          "type": "boolean"
+        },
+        "behaviour_history": {
+          "default": false,
+          "title": "Behaviour History",
+          "type": "boolean"
+        },
+        "scraped_internet_data": {
+          "default": false,
+          "title": "Scraped Internet Data",
+          "type": "boolean"
+        },
+        "freetext_prompts": {
+          "default": false,
+          "title": "Freetext Prompts",
+          "type": "boolean"
+        },
+        "other": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Other"
+        }
+      },
+      "title": "SystemInputs",
+      "type": "object"
+    },
+    "SystemOutputs": {
+      "additionalProperties": false,
+      "properties": {
+        "individual_scores": {
+          "default": false,
+          "title": "Individual Scores",
+          "type": "boolean"
+        },
+        "behaviour_predictions": {
+          "default": false,
+          "title": "Behaviour Predictions",
+          "type": "boolean"
+        },
+        "criminal_risk_predictions": {
+          "default": false,
+          "title": "Criminal Risk Predictions",
+          "type": "boolean"
+        },
+        "emotion_inferences": {
+          "default": false,
+          "title": "Emotion Inferences",
+          "type": "boolean"
+        },
+        "sensitive_attribute_classifications": {
+          "default": false,
+          "title": "Sensitive Attribute Classifications",
+          "type": "boolean"
+        },
+        "freetext_generations": {
+          "default": false,
+          "title": "Freetext Generations",
+          "type": "boolean"
+        },
+        "other": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Other"
+        }
+      },
+      "title": "SystemOutputs",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "version": {
+      "minLength": 1,
+      "title": "Version",
+      "type": "string"
+    },
+    "provider": {
+      "minLength": 1,
+      "title": "Provider",
+      "type": "string"
+    },
+    "deployer": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Deployer"
+    },
+    "purpose": {
+      "minLength": 1,
+      "title": "Purpose",
+      "type": "string"
+    },
+    "system_description": {
+      "minLength": 1,
+      "title": "System Description",
+      "type": "string"
+    },
+    "deployment_jurisdictions": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Deployment Jurisdictions",
+      "type": "array"
+    },
+    "output_consumed_in_eu": {
+      "title": "Output Consumed In Eu",
+      "type": "boolean"
+    },
+    "subject_population": {
+      "$ref": "#/$defs/SubjectPopulation"
+    },
+    "inputs": {
+      "$ref": "#/$defs/SystemInputs",
+      "default": {
+        "biometric": false,
+        "facial_images": false,
+        "emotional_state_inference": false,
+        "behaviour_history": false,
+        "scraped_internet_data": false,
+        "freetext_prompts": false,
+        "other": null
+      }
+    },
+    "outputs": {
+      "$ref": "#/$defs/SystemOutputs",
+      "default": {
+        "individual_scores": false,
+        "behaviour_predictions": false,
+        "criminal_risk_predictions": false,
+        "emotion_inferences": false,
+        "sensitive_attribute_classifications": false,
+        "freetext_generations": false,
+        "other": null
+      }
+    },
+    "deployment_context": {
+      "$ref": "#/$defs/DeploymentContext",
+      "default": {
+        "workplace": false,
+        "education": false,
+        "public_space": false,
+        "real_time_operation": false,
+        "law_enforcement_use": false,
+        "healthcare": false,
+        "financial_services": false,
+        "other": null
+      }
+    },
+    "mitigations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Mitigations",
+      "type": "array"
+    },
+    "metadata": {
+      "$ref": "#/$defs/Metadata",
+      "default": {
+        "last_reviewed": null,
+        "owner": null,
+        "reviewed_by": null
+      }
+    }
+  },
+  "required": [
+    "name",
+    "version",
+    "provider",
+    "purpose",
+    "system_description",
+    "deployment_jurisdictions",
+    "output_consumed_in_eu",
+    "subject_population"
+  ],
+  "title": "SystemDescription",
+  "type": "object"
+}

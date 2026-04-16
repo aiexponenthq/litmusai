@@ -87,7 +87,9 @@ class TestRule:
                 reviewed_date="2026-04-15",
             )
 
-    @pytest.mark.parametrize("cat", ["5.1.a", "5.1.b", "5.1.c", "5.1.d", "5.1.e", "5.1.f", "5.1.g", "5.1.h"])
+    @pytest.mark.parametrize(
+        "cat", ["5.1.a", "5.1.b", "5.1.c", "5.1.d", "5.1.e", "5.1.f", "5.1.g", "5.1.h"]
+    )
     def test_accepts_all_article_5_categories(self, cat: str) -> None:
         rule = Rule(
             id="r",

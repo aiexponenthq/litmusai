@@ -164,9 +164,7 @@ class TestSystemDescription:
         with pytest.raises(ValidationError):
             SystemDescription(**minimal_system_dict)
 
-    def test_empty_jurisdictions_list_rejected(
-        self, minimal_system_dict: dict[str, Any]
-    ) -> None:
+    def test_empty_jurisdictions_list_rejected(self, minimal_system_dict: dict[str, Any]) -> None:
         minimal_system_dict["deployment_jurisdictions"] = []
         with pytest.raises(ValidationError):
             SystemDescription(**minimal_system_dict)
@@ -176,9 +174,7 @@ class TestSystemDescription:
         system = SystemDescription(**minimal_system_dict)
         assert system.deployer is None
 
-    def test_mitigations_default_empty_list(
-        self, minimal_system_dict: dict[str, Any]
-    ) -> None:
+    def test_mitigations_default_empty_list(self, minimal_system_dict: dict[str, Any]) -> None:
         del minimal_system_dict["mitigations"]
         system = SystemDescription(**minimal_system_dict)
         assert system.mitigations == []
@@ -188,38 +184,28 @@ class TestSystemDescription:
         system = SystemDescription(**minimal_system_dict)
         assert system.metadata.owner is None
 
-    def test_unknown_top_level_field_rejected(
-        self, minimal_system_dict: dict[str, Any]
-    ) -> None:
+    def test_unknown_top_level_field_rejected(self, minimal_system_dict: dict[str, Any]) -> None:
         minimal_system_dict["sneaky_extra"] = "oops"
         with pytest.raises(ValidationError):
             SystemDescription(**minimal_system_dict)
 
-    def test_roundtrip_json_preserves_shape(
-        self, minimal_system_dict: dict[str, Any]
-    ) -> None:
+    def test_roundtrip_json_preserves_shape(self, minimal_system_dict: dict[str, Any]) -> None:
         original = SystemDescription(**minimal_system_dict)
         as_json = original.model_dump_json()
         reparsed = SystemDescription.model_validate_json(as_json)
         assert reparsed == original
 
-    def test_jurisdiction_accepts_multiple(
-        self, minimal_system_dict: dict[str, Any]
-    ) -> None:
+    def test_jurisdiction_accepts_multiple(self, minimal_system_dict: dict[str, Any]) -> None:
         minimal_system_dict["deployment_jurisdictions"] = ["EU", "US", "UK"]
         system = SystemDescription(**minimal_system_dict)
         assert len(system.deployment_jurisdictions) == 3
 
-    def test_purpose_cannot_be_empty_string(
-        self, minimal_system_dict: dict[str, Any]
-    ) -> None:
+    def test_purpose_cannot_be_empty_string(self, minimal_system_dict: dict[str, Any]) -> None:
         minimal_system_dict["purpose"] = ""
         with pytest.raises(ValidationError):
             SystemDescription(**minimal_system_dict)
 
-    def test_system_description_cannot_be_empty(
-        self, minimal_system_dict: dict[str, Any]
-    ) -> None:
+    def test_system_description_cannot_be_empty(self, minimal_system_dict: dict[str, Any]) -> None:
         minimal_system_dict["system_description"] = ""
         with pytest.raises(ValidationError):
             SystemDescription(**minimal_system_dict)

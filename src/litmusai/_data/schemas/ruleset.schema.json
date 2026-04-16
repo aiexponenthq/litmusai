@@ -1,0 +1,185 @@
+{
+  "$defs": {
+    "Rule": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "category": {
+          "title": "Category",
+          "type": "string"
+        },
+        "version": {
+          "title": "Version",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "expression": {
+          "title": "Expression",
+          "type": "string"
+        },
+        "verdict_if_triggered": {
+          "enum": [
+            "clear",
+            "amber",
+            "red"
+          ],
+          "title": "Verdict If Triggered",
+          "type": "string"
+        },
+        "confidence_delta": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Confidence Delta"
+        },
+        "citations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Citations",
+          "type": "array"
+        },
+        "reviewed_by": {
+          "title": "Reviewed By",
+          "type": "string"
+        },
+        "reviewed_date": {
+          "title": "Reviewed Date",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "category",
+        "version",
+        "description",
+        "expression",
+        "verdict_if_triggered",
+        "reviewed_by",
+        "reviewed_date"
+      ],
+      "title": "Rule",
+      "type": "object"
+    },
+    "RulesetSignature": {
+      "additionalProperties": false,
+      "properties": {
+        "signer_name": {
+          "minLength": 1,
+          "title": "Signer Name",
+          "type": "string"
+        },
+        "signer_bar_number": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signer Bar Number"
+        },
+        "signer_firm": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signer Firm"
+        },
+        "signer_email": {
+          "format": "email",
+          "title": "Signer Email",
+          "type": "string"
+        },
+        "signed_date": {
+          "title": "Signed Date",
+          "type": "string"
+        },
+        "signature_algorithm": {
+          "enum": [
+            "sha256",
+            "pgp-detached",
+            "x509-pkcs7"
+          ],
+          "title": "Signature Algorithm",
+          "type": "string"
+        },
+        "signature_value": {
+          "minLength": 1,
+          "title": "Signature Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "signer_name",
+        "signer_email",
+        "signed_date",
+        "signature_algorithm",
+        "signature_value"
+      ],
+      "title": "RulesetSignature",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "ruleset_version": {
+      "title": "Ruleset Version",
+      "type": "string"
+    },
+    "regulation": {
+      "title": "Regulation",
+      "type": "string"
+    },
+    "effective_date": {
+      "title": "Effective Date",
+      "type": "string"
+    },
+    "rules": {
+      "items": {
+        "$ref": "#/$defs/Rule"
+      },
+      "minItems": 1,
+      "title": "Rules",
+      "type": "array"
+    },
+    "signature": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/RulesetSignature"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "ruleset_version",
+    "regulation",
+    "effective_date",
+    "rules"
+  ],
+  "title": "Ruleset",
+  "type": "object"
+}

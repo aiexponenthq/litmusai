@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import re
 from datetime import datetime
-from typing import Literal, Optional
+from typing import Literal
 
 from pydantic import BaseModel, EmailStr, Field, field_validator
 
@@ -17,7 +17,7 @@ SignatureStatus = Literal["unsigned", "verified", "invalid"]
 
 class Citation(BaseModel, extra="forbid"):
     article: str = Field(..., min_length=1)
-    recital: Optional[str] = None
+    recital: str | None = None
 
 
 class CategoryResult(BaseModel, extra="forbid"):
@@ -43,8 +43,8 @@ class RulesetProvenance(BaseModel, extra="forbid"):
     ruleset_version: str
     regulation: str
     effective_date: str
-    signer_name: Optional[str] = None
-    signed_date: Optional[str] = None
+    signer_name: str | None = None
+    signed_date: str | None = None
     signature_status: SignatureStatus
     display_label: str
 

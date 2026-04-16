@@ -3,14 +3,22 @@
 from __future__ import annotations
 
 import re
-from typing import Literal, Optional
+from typing import Literal
 
 from pydantic import BaseModel, EmailStr, Field, field_validator, model_validator
 
-_ARTICLE_5_CATEGORIES = frozenset({
-    "5.1.a", "5.1.b", "5.1.c", "5.1.d",
-    "5.1.e", "5.1.f", "5.1.g", "5.1.h",
-})
+_ARTICLE_5_CATEGORIES = frozenset(
+    {
+        "5.1.a",
+        "5.1.b",
+        "5.1.c",
+        "5.1.d",
+        "5.1.e",
+        "5.1.f",
+        "5.1.g",
+        "5.1.h",
+    }
+)
 
 _SNAKE_CASE_RE = re.compile(r"^[a-z][a-z0-9_]*$")
 
@@ -25,7 +33,7 @@ class Rule(BaseModel, extra="forbid"):
     description: str
     expression: str
     verdict_if_triggered: Verdict
-    confidence_delta: Optional[int] = None
+    confidence_delta: int | None = None
     citations: list[str] = Field(default_factory=list)
     reviewed_by: str
     reviewed_date: str
@@ -52,8 +60,8 @@ class Rule(BaseModel, extra="forbid"):
 
 class RulesetSignature(BaseModel, extra="forbid"):
     signer_name: str = Field(..., min_length=1)
-    signer_bar_number: Optional[str] = None
-    signer_firm: Optional[str] = None
+    signer_bar_number: str | None = None
+    signer_firm: str | None = None
     signer_email: EmailStr
     signed_date: str
     signature_algorithm: SignatureAlgorithm
@@ -65,10 +73,10 @@ class Ruleset(BaseModel, extra="forbid"):
     regulation: str
     effective_date: str
     rules: list[Rule] = Field(..., min_length=1)
-    signature: Optional[RulesetSignature] = None
+    signature: RulesetSignature | None = None
 
     @model_validator(mode="after")
-    def _validate_unique_rule_ids(self) -> "Ruleset":
+    def _validate_unique_rule_ids(self) -> Ruleset:
         ids = [r.id for r in self.rules]
         if len(ids) != len(set(ids)):
             msg = "Rule IDs must be unique within a ruleset."

@@ -8,7 +8,7 @@ NFR-8 gate.
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 import pytest
@@ -77,4 +77,4 @@ def minimal_system_dict() -> dict[str, Any]:
 @pytest.fixture
 def fixed_timestamp() -> datetime:
     """A deterministic timestamp for byte-identical report comparisons."""
-    return datetime(2026, 4, 15, 12, 0, 0, tzinfo=timezone.utc)
+    return datetime(2026, 4, 15, 12, 0, 0, tzinfo=UTC)
