@@ -1,0 +1,173 @@
+{
+  "ruleset_version": "ruleset-2024-1689-v0.1",
+  "regulation": "Regulation (EU) 2024/1689",
+  "effective_date": "2025-02-02",
+  "rules": [
+    {
+      "id": "rule_a_influences_behaviour",
+      "category": "5.1.a",
+      "version": "v1",
+      "description": "System output attempts to influence, persuade, or change user behaviour.",
+      "expression": "system.outputs.behaviour_predictions == true",
+      "verdict_if_triggered": "amber",
+      "citations": ["Art. 5(1)(a)", "Recital 29"],
+      "reviewed_by": "aiexponent-internal-panel-v1",
+      "reviewed_date": "2026-04-16"
+    },
+    {
+      "id": "rule_a_subliminal_inputs",
+      "category": "5.1.a",
+      "version": "v1",
+      "description": "System uses inputs not transparent to the user (subliminal, concealed).",
+      "expression": "system.inputs.emotional_state_inference == true and system.outputs.behaviour_predictions == true",
+      "verdict_if_triggered": "red",
+      "citations": ["Art. 5(1)(a)", "Recital 29", "Recital 30"],
+      "reviewed_by": "aiexponent-internal-panel-v1",
+      "reviewed_date": "2026-04-16"
+    },
+    {
+      "id": "rule_a_freetext_manipulation",
+      "category": "5.1.a",
+      "version": "v1",
+      "description": "System generates free text aimed at changing behaviour (persuasion chatbots).",
+      "expression": "system.outputs.freetext_generations == true and system.outputs.behaviour_predictions == true",
+      "verdict_if_triggered": "amber",
+      "citations": ["Art. 5(1)(a)", "Recital 31"],
+      "reviewed_by": "aiexponent-internal-panel-v1",
+      "reviewed_date": "2026-04-16"
+    },
+    {
+      "id": "rule_c_social_scoring",
+      "category": "5.1.c",
+      "version": "v1",
+      "description": "System produces individual scores based on social behaviour or personal characteristics used for detrimental treatment.",
+      "expression": "system.outputs.individual_scores == true and system.inputs.behaviour_history == true",
+      "verdict_if_triggered": "red",
+      "citations": ["Art. 5(1)(c)", "Recital 31", "Recital 33"],
+      "reviewed_by": "aiexponent-internal-panel-v1",
+      "reviewed_date": "2026-04-16"
+    },
+    {
+      "id": "rule_c_scoring_from_scraped_data",
+      "category": "5.1.c",
+      "version": "v1",
+      "description": "System scores individuals using scraped internet data.",
+      "expression": "system.outputs.individual_scores == true and system.inputs.scraped_internet_data == true",
+      "verdict_if_triggered": "red",
+      "citations": ["Art. 5(1)(c)", "Recital 33"],
+      "reviewed_by": "aiexponent-internal-panel-v1",
+      "reviewed_date": "2026-04-16"
+    },
+    {
+      "id": "rule_c_scoring_general",
+      "category": "5.1.c",
+      "version": "v1",
+      "description": "System produces individual scores that may constitute social scoring.",
+      "expression": "system.outputs.individual_scores == true",
+      "verdict_if_triggered": "amber",
+      "citations": ["Art. 5(1)(c)"],
+      "reviewed_by": "aiexponent-internal-panel-v1",
+      "reviewed_date": "2026-04-16"
+    },
+    {
+      "id": "rule_e_untargeted_facial_scraping",
+      "category": "5.1.e",
+      "version": "v1",
+      "description": "System builds or expands a facial recognition database from untargeted scraping.",
+      "expression": "system.inputs.facial_images == true and system.inputs.scraped_internet_data == true",
+      "verdict_if_triggered": "red",
+      "citations": ["Art. 5(1)(e)", "Recital 42"],
+      "reviewed_by": "aiexponent-internal-panel-v1",
+      "reviewed_date": "2026-04-16"
+    },
+    {
+      "id": "rule_e_facial_from_cctv",
+      "category": "5.1.e",
+      "version": "v1",
+      "description": "System uses facial images from public-space surveillance.",
+      "expression": "system.inputs.facial_images == true and system.deployment_context.public_space == true",
+      "verdict_if_triggered": "amber",
+      "citations": ["Art. 5(1)(e)", "Recital 42"],
+      "reviewed_by": "aiexponent-internal-panel-v1",
+      "reviewed_date": "2026-04-16"
+    },
+    {
+      "id": "rule_f_workplace_emotion",
+      "category": "5.1.f",
+      "version": "v1",
+      "description": "System infers emotions in workplace context.",
+      "expression": "system.outputs.emotion_inferences == true and system.deployment_context.workplace == true",
+      "verdict_if_triggered": "red",
+      "citations": ["Art. 5(1)(f)", "Recital 44"],
+      "reviewed_by": "aiexponent-internal-panel-v1",
+      "reviewed_date": "2026-04-16"
+    },
+    {
+      "id": "rule_f_education_emotion",
+      "category": "5.1.f",
+      "version": "v1",
+      "description": "System infers emotions in educational context.",
+      "expression": "system.outputs.emotion_inferences == true and system.deployment_context.education == true",
+      "verdict_if_triggered": "red",
+      "citations": ["Art. 5(1)(f)", "Recital 44"],
+      "reviewed_by": "aiexponent-internal-panel-v1",
+      "reviewed_date": "2026-04-16"
+    },
+    {
+      "id": "rule_f_emotion_healthcare_exception",
+      "category": "5.1.f",
+      "version": "v1",
+      "description": "System infers emotions in healthcare context (exception applies, but flag for review).",
+      "expression": "system.outputs.emotion_inferences == true and system.deployment_context.healthcare == true",
+      "verdict_if_triggered": "amber",
+      "citations": ["Art. 5(1)(f)", "Recital 44"],
+      "reviewed_by": "aiexponent-internal-panel-v1",
+      "reviewed_date": "2026-04-16"
+    },
+    {
+      "id": "rule_f_emotion_general",
+      "category": "5.1.f",
+      "version": "v1",
+      "description": "System infers emotions in any context.",
+      "expression": "system.outputs.emotion_inferences == true",
+      "verdict_if_triggered": "amber",
+      "citations": ["Art. 5(1)(f)"],
+      "reviewed_by": "aiexponent-internal-panel-v1",
+      "reviewed_date": "2026-04-16"
+    },
+    {
+      "id": "rule_b_targets_minors",
+      "category": "5.1.b",
+      "version": "v1",
+      "description": "System targets minors and produces behaviour predictions.",
+      "expression": "targets_population(system, \"minors\") and system.outputs.behaviour_predictions == true",
+      "verdict_if_triggered": "red",
+      "citations": ["Art. 5(1)(b)", "Recital 29", "Recital 32"],
+      "reviewed_by": "aiexponent-internal-panel-v1",
+      "reviewed_date": "2026-04-16"
+    },
+    {
+      "id": "rule_b_vulnerable_population",
+      "category": "5.1.b",
+      "version": "v1",
+      "description": "System targets persons in vulnerable economic situations.",
+      "expression": "targets_population(system, \"persons_in_vulnerable_economic_situations\")",
+      "verdict_if_triggered": "amber",
+      "citations": ["Art. 5(1)(b)", "Recital 32"],
+      "reviewed_by": "aiexponent-internal-panel-v1",
+      "reviewed_date": "2026-04-16"
+    },
+    {
+      "id": "rule_d_criminal_risk",
+      "category": "5.1.d",
+      "version": "v1",
+      "description": "System predicts individual criminal risk based on profiling.",
+      "expression": "system.outputs.criminal_risk_predictions == true",
+      "verdict_if_triggered": "red",
+      "citations": ["Art. 5(1)(d)", "Recital 42"],
+      "reviewed_by": "aiexponent-internal-panel-v1",
+      "reviewed_date": "2026-04-16"
+    }
+  ],
+  "signature": null
+}
