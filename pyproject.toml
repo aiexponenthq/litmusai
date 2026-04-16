@@ -1,0 +1,198 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "litmusai"
+version = "0.1.0.dev0"
+description = "Free, deterministic, CLI screener for Article 5 of the EU AI Act (Regulation (EU) 2024/1689)."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+authors = [
+    { name = "AiExponent LLC", email = "hello@aiexponent.com" },
+]
+keywords = [
+    "eu-ai-act",
+    "article-5",
+    "ai-governance",
+    "compliance",
+    "cli",
+    "screening",
+    "prohibited-ai-practices",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Legal Industry",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Quality Assurance",
+    "Typing :: Typed",
+]
+dependencies = [
+    "pydantic[email]>=2.5,<3.0",
+    "typer>=0.12,<1.0",
+    "click>=8.1,<9.0",
+    "rich>=13.0,<14.0",
+    "pyyaml>=6.0,<7.0",
+    "jsonschema>=4.0,<5.0",
+    "jinja2>=3.1,<4.0",
+    "structlog>=24.0,<26.0",
+]
+
+[project.optional-dependencies]
+pdf = [
+    "weasyprint>=60.0,<70.0",
+]
+dev = [
+    "pytest>=8.0,<9.0",
+    "pytest-cov>=5.0,<7.0",
+    "pytest-socket>=0.7,<1.0",
+    "mypy>=1.10,<2.0",
+    "ruff>=0.5,<1.0",
+    "hypothesis>=6.100,<7.0",
+    "licensecheck>=2024.2",
+    "pre-commit>=3.7,<5.0",
+    "types-pyyaml",
+    "types-jsonschema",
+]
+
+[project.scripts]
+litmus = "litmusai.cli.main:app"
+
+[project.urls]
+Homepage = "https://aiexponent.com/products/litmusai"
+Documentation = "https://aiexponent.com/docs/litmusai"
+Repository = "https://github.com/aiexponenthq/litmusai"
+Issues = "https://github.com/aiexponenthq/litmusai/issues"
+Changelog = "https://github.com/aiexponenthq/litmusai/blob/main/CHANGELOG.md"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/litmusai"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"src/litmusai/_data" = "litmusai/_data"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "src/litmusai",
+    "tests",
+    "docs",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "CODE_OF_CONDUCT.md",
+    "SECURITY.md",
+    "pyproject.toml",
+]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--strict-config",
+    "--import-mode=importlib",
+]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+markers = [
+    "unit: pure unit tests — fast, no I/O beyond the package itself",
+    "contract: tests pinned to a PRD functional requirement or acceptance criterion",
+    "boundary: tests at the boundary between LitmusAI and its environment (files, schemas)",
+    "integration: end-to-end tests spawning the CLI or hitting the full pipeline",
+    "slow: tests that take more than 1s each",
+]
+filterwarnings = [
+    "error",
+    "ignore::DeprecationWarning:jsonschema.*",
+]
+
+[tool.coverage.run]
+source = ["src/litmusai"]
+branch = true
+parallel = true
+
+[tool.coverage.report]
+precision = 2
+show_missing = true
+skip_covered = false
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle
+    "W",    # pycodestyle
+    "F",    # pyflakes
+    "I",    # isort
+    "B",    # flake8-bugbear
+    "UP",   # pyupgrade
+    "C4",   # flake8-comprehensions
+    "SIM",  # flake8-simplify
+    "RUF",  # ruff-specific
+    "S",    # flake8-bandit (security)
+    "PTH",  # flake8-use-pathlib
+    "RET",  # flake8-return
+    "N",    # pep8-naming
+]
+ignore = [
+    "E501",   # line length (ruff formatter handles)
+    "S101",   # asserts in tests are fine
+    "B008",   # typer uses default factories deliberately
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S106", "S311"]
+"src/litmusai/engine/expression.py" = ["S307"]  # only if we ever touch eval — explicit opt-in
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = [
+    "weasyprint.*",
+    "licensecheck.*",
+]
+ignore_missing_imports = true
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
