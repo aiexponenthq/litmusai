@@ -61,3 +61,7 @@ coverage.xml
 litmusai-report*.json
 litmusai-report*.pdf
 ~/.config/litmusai/
+
+# Personal AI assistant instructions (never commit)
+CLAUDE.md
+.claude/
