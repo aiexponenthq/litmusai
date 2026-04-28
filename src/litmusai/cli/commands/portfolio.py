@@ -19,7 +19,7 @@ from litmusai.models.system import SystemDescription
 console = Console()
 
 _DEFAULT_RULESET = (
-    Path(__file__).resolve().parents[2] / "_data" / "ruleset" / "ruleset-2024-1689-v0.1.json"
+    Path(__file__).resolve().parents[2] / "_data" / "ruleset" / "ruleset-2024-1689-v1.0.json"
 )
 
 

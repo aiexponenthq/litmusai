@@ -1,6 +1,6 @@
 # Internal Ruleset Review Record
 
-**Ruleset version:** `ruleset-2024-1689-v0.1`
+**Ruleset version:** `ruleset-2024-1689-v1.0`
 **Regulation:** Regulation (EU) 2024/1689 (EU AI Act)
 **Review date:** 2026-04-16
 **Status:** Internal panel review — NOT external legal review
