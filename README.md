@@ -18,7 +18,7 @@
 
 Screen your AI system against the **eight prohibited-practice categories** of [Article 5](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689) of the EU AI Act (Regulation (EU) 2024/1689). Get a per-category **Red / Amber / Clear** verdict with regulatory citations, confidence levels, and remediation guidance — in under 60 seconds, without a sales call, without a paywall, and without uploading data to any server.
 
-Built by [AiExponent LLC](https://aiexponent.com). Apache 2.0. Runs entirely offline after `pip install`.
+Built by [AI Exponent LLC](https://aiexponent.com). Apache 2.0. Runs entirely offline after `pip install`.
 
 ## Quick Start
 

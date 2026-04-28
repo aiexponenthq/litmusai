@@ -1,6 +1,6 @@
 name: "LitmusAI Screen"
 description: "Screen an AI system against Article 5 of the EU AI Act."
-author: "AiExponent LLC"
+author: "AI Exponent LLC"
 
 inputs:
   path:

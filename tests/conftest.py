@@ -24,8 +24,8 @@ def minimal_system_dict() -> dict[str, Any]:
     return {
         "name": "Adult Calculator",
         "version": "1.0.0",
-        "provider": "AiExponent LLC",
-        "deployer": "AiExponent LLC",
+        "provider": "AI Exponent LLC",
+        "deployer": "AI Exponent LLC",
         "purpose": "Basic arithmetic for adult users.",
         "system_description": (
             "A stateless pocket calculator. No personal data processed, no "

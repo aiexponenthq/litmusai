@@ -11,12 +11,12 @@
 
 | Role | Name | Affiliation |
 |------|------|-------------|
-| Compliance Engineer | AiExponent Internal | AiExponent LLC |
-| AI Governance Analyst | AiExponent Internal | AiExponent LLC |
-| Corporate Legal Advisor | AiExponent Internal (Anthropic persona) | AiExponent LLC |
-| Responsible AI Lead | AiExponent Internal | AiExponent LLC |
-| Head of AI Governance (Chair) | AiExponent Internal | AiExponent LLC |
-| Security Engineer | AiExponent Internal | AiExponent LLC |
+| Compliance Engineer | AiExponent Internal | AI Exponent LLC |
+| AI Governance Analyst | AiExponent Internal | AI Exponent LLC |
+| Corporate Legal Advisor | AiExponent Internal (Anthropic persona) | AI Exponent LLC |
+| Responsible AI Lead | AiExponent Internal | AI Exponent LLC |
+| Head of AI Governance (Chair) | AiExponent Internal | AI Exponent LLC |
+| Security Engineer | AiExponent Internal | AI Exponent LLC |
 
 **None of the above are qualified EU AI Act lawyers. This record is an engineering review by AiExponent staff, not legal advice to any specific customer and not a substitute for qualified EU AI Act counsel.**
 

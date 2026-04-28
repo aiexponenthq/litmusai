@@ -1,6 +1,6 @@
 # Contributing to LitmusAI
 
-Thank you for considering contributing to LitmusAI. This project is maintained by [AiExponent LLC](https://aiexponent.com).
+Thank you for considering contributing to LitmusAI. This project is maintained by [AI Exponent LLC](https://aiexponent.com).
 
 ## How to Contribute
 
