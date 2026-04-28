@@ -40,6 +40,7 @@ def main(
 
 # Register commands — imported after app is defined to avoid circular imports.
 import litmusai.cli.commands.debug as _debug  # noqa: F401, E402
+import litmusai.cli.commands.diff_ruleset as _diff_ruleset  # noqa: F401, E402
 import litmusai.cli.commands.export as _export  # noqa: F401, E402
 import litmusai.cli.commands.init as _init  # noqa: F401, E402
 import litmusai.cli.commands.portfolio as _portfolio  # noqa: F401, E402
