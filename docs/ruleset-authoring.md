@@ -59,6 +59,41 @@ Rules use a constrained expression language (not Python). Supported:
 
 Supported algorithms: `sha256`, `pgp-detached`, `x509-pkcs7`.
 
+## Worked example — `acme-corp-signed-v1.0.json`
+
+A complete dummy-signed reference ruleset ships with the package at
+[`tests/fixtures/rulesets/acme-corp-signed-v1.0.json`](../tests/fixtures/rulesets/acme-corp-signed-v1.0.json).
+Use it as a paste-and-modify template when authoring your own.
+
+It demonstrates every concept from the schema sections above:
+
+- A complete `ruleset_version`, `regulation`, `effective_date` header
+- One concrete rule for `5.1.a` with the canonical `id` / `version` /
+  `description` / `expression` / `verdict_if_triggered` / `citations` /
+  `reviewed_by` / `reviewed_date` fields
+- A complete `signature` block signed by a hypothetical "Smith & Co LLP"
+  with `signer_bar_number`, `signer_firm`, and `signer_email` populated
+- The `sha256` signature algorithm
+
+The signature in the fixture is a placeholder hex string for testing
+purposes only — production rulesets must carry a real cryptographic
+signature over the canonical JSON of the rules array. The signature
+algorithm column tells LitmusAI how to verify; supported values are
+`sha256` (HMAC-style), `pgp-detached`, and `x509-pkcs7`.
+
+To try it end-to-end:
+
+```bash
+litmus verify-ruleset tests/fixtures/rulesets/acme-corp-signed-v1.0.json
+litmus use-ruleset tests/fixtures/rulesets/acme-corp-signed-v1.0.json
+litmus ruleset-info
+litmus screen examples/example-clear.yaml
+```
+
+The report header will show `ruleset: acme-corp-v1.0 (SIGNED by: Smith
+& Co LLP · 2026-05-01 · signature verified)` instead of the default
+`UNREVIEWED` provenance.
+
 ## Using Your Ruleset
 
 ```bash
