@@ -1,0 +1,88 @@
+# LitmusAI example — expected verdict: AMBER (requires human review)
+# ------------------------------------------------------------------------------
+# This example shows a financial-services credit-scoring system that
+# lands in the grey zone for Article 5(1)(c) (social scoring). The rule
+# fires on amber, not red, because the deployer is a private-sector
+# lender, the score is not the sole basis of the decision, and there
+# are documented mitigations (human-in-the-loop, right-to-contest).
+#
+# This is also a high-risk system under Article 6 + Annex III §5(b)
+# (creditworthiness / credit scoring). Annex III scope lives in
+# RiskForge, not here. LitmusAI only screens against Article 5
+# prohibitions. A system can be "Article 5: amber" AND still be
+# "Article 6: high-risk" — both files need to be produced.
+#
+# Run:  litmus screen example-amber.yaml
+# Expected:
+#   Overall verdict: AMBER
+#   5.1.c (Social scoring): AMBER — needs review
+#   Other 7 categories: CLEAR
+
+name: "Lendly Adaptive Credit Score"
+version: "1.3.0"
+provider: "Lendly Financial Services BV"
+deployer: "Lendly Financial Services BV"
+purpose: >
+  Score consumer loan applicants (€500–€25,000 unsecured personal loans)
+  by combining traditional bureau data with applicant-supplied form
+  data to produce an approval-recommendation and interest-rate band.
+
+system_description: >
+  ML-based scorecard. Inputs: traditional credit-bureau pull (Equifax,
+  Experian) + applicant-supplied form data (income, employment,
+  address). Output: a 0–1000 score and a recommended approval / decline
+  / refer-to-loan-officer flag. A loan officer with override authority
+  reviews every recommendation before disbursement; the score is never
+  the sole basis of a credit decision (GDPR Article 22 compliance).
+  Right-to-contest workflow is published to applicants.
+
+deployment_jurisdictions: ["EU", "UK"]
+output_consumed_in_eu: true
+
+subject_population:
+  categories: ["general_public"]
+  notes: >
+    All adults applying for unsecured consumer credit. Marketing and
+    pricing are not differentiated by protected attributes; vulnerable-
+    borrower affordability check is run before approval.
+
+inputs:
+  biometric: false
+  facial_images: false
+  emotional_state_inference: false
+  behaviour_history: false
+  scraped_internet_data: false
+  freetext_prompts: false
+  other: null
+
+outputs:
+  individual_scores: true             # the 0–1000 credit score
+  behaviour_predictions: false
+  criminal_risk_predictions: false
+  emotion_inferences: false
+  sensitive_attribute_classifications: false
+  freetext_generations: false
+  other: "approve/decline/refer recommendation; interest-rate band"
+
+deployment_context:
+  workplace: false
+  education: false
+  public_space: false
+  real_time_operation: false
+  law_enforcement_use: false
+  healthcare: false
+  financial_services: true              # the obvious flag
+  other: null
+
+mitigations:
+  - "Loan officer with override authority reviews every recommendation"
+  - "Right-to-contest workflow under GDPR Art. 22 published to applicants"
+  - "Quarterly fairness audit across protected attributes (age, sex, ethnicity)"
+  - "Vulnerable-borrower affordability check applied before approval"
+  - "No marketing or pricing differentiation based on protected attributes"
+  - "Score thresholds and feature weights documented in the Article 13 card"
+
+metadata:
+  last_reviewed: 2026-04-22
+  owner: "Chief Credit Officer, Lendly Financial Services BV"
+  reviewed_by: "Head of AI Governance, Lendly Financial Services BV"

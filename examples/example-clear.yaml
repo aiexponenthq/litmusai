@@ -1,0 +1,88 @@
+# LitmusAI example — expected verdict: CLEAR (all 8 categories pass)
+# ------------------------------------------------------------------------------
+# This example shows a system that is well outside Article 5's eight
+# prohibited-practice categories. It deliberately ticks none of the input,
+# output, or deployment-context flags that any Article 5 sub-point depends on.
+# Use as a starting template for ordinary, low-risk AI deployments.
+#
+# Run:  litmus screen example-clear.yaml
+# Expected:
+#   Overall verdict: CLEAR
+#   All 8 categories: CLEAR
+
+name: "MeetingSummariser"
+version: "2.4.1"
+provider: "Acme Productivity Tools"
+deployer: "Internal — same as provider"
+purpose: >
+  Summarises Zoom / Google Meet recordings into structured action-item
+  lists for adult professional users who explicitly upload a transcript.
+
+# A factual, plain-English description of what the system actually does.
+# Keep this short; the screener and the legal reviewer both read it.
+system_description: >
+  Stateless transcript-summarisation service. Takes a meeting transcript
+  uploaded by an authenticated user, runs an LLM summarisation pass, and
+  returns a structured JSON output (topics, action items, decisions). No
+  facial / voice / emotion analysis. No persistent storage of personal
+  data beyond the user's own account. No automated decisions about
+  people; outputs are human-readable summaries reviewed by the user
+  before any business action is taken.
+
+deployment_jurisdictions: ["EU", "US", "UK"]
+output_consumed_in_eu: true
+
+# Who the system's outputs are about. For a meeting summariser the
+# affected population is the meeting participants — adults in a
+# professional context, not a vulnerable group, not minors.
+subject_population:
+  categories: ["general_public"]
+  notes: >
+    Adult professional users at companies that subscribe to the service.
+    Minors are not in scope (terms of service require users to be 18+).
+
+# Input / output / deployment-context flags must reflect reality. If
+# uncertain, set true and document mitigations — false claims here are
+# the most common cause of mis-screening.
+inputs:
+  biometric: false
+  facial_images: false
+  emotional_state_inference: false
+  behaviour_history: false
+  scraped_internet_data: false
+  freetext_prompts: true             # users paste/upload transcripts
+  other: null
+
+outputs:
+  individual_scores: false
+  behaviour_predictions: false
+  criminal_risk_predictions: false
+  emotion_inferences: false
+  sensitive_attribute_classifications: false
+  freetext_generations: true         # the summary itself
+  other: null
+
+deployment_context:
+  workplace: false                   # consumer / B2B SaaS, not deployed
+                                     # *inside* the workplace as a
+                                     # surveillance tool
+  education: false
+  public_space: false
+  real_time_operation: false
+  law_enforcement_use: false
+  healthcare: false
+  financial_services: false
+  other: null
+
+# Mitigations are how you defend ambiguous edges in a screening review.
+# Keep them concrete and verifiable, not aspirational.
+mitigations:
+  - "Users explicitly upload their own transcripts — no covert capture"
+  - "Output is reviewed by the user before any downstream action"
+  - "No persistent biometric profiles built across sessions"
+  - "Terms of service require user age >= 18"
+
+metadata:
+  last_reviewed: 2026-04-15
+  owner: "Director of Product, Acme Productivity Tools"
+  reviewed_by: "AI Governance Lead, Acme Productivity Tools"

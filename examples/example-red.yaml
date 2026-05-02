@@ -1,0 +1,96 @@
+# LitmusAI example — expected verdict: RED (Article 5(1)(f) prohibition)
+# ------------------------------------------------------------------------------
+# This example shows a workplace emotion-recognition system. Article
+# 5(1)(f) of Regulation (EU) 2024/1689 prohibits the placing on the
+# market, putting into service, or use of AI systems to infer emotions
+# of natural persons in the areas of workplace and education
+# institutions, except where the AI system is intended to be put in
+# place or into the market for medical or safety reasons.
+#
+# Article 5 has been enforceable since 2 February 2025. The penalty
+# tier is the highest in the regulation: up to €35M or 7% of global
+# annual turnover (Article 99(3)).
+#
+# Run:  litmus screen example-red.yaml
+# Expected:
+#   Overall verdict: RED
+#   5.1.f (Emotion recognition in workplace/education): RED
+#   Other 7 categories: CLEAR
+
+name: "MoodSync Workplace Wellbeing Suite"
+version: "0.9.0-pilot"
+provider: "MoodSync Technologies GmbH"
+deployer: "Pilot enterprise customer (anonymised)"
+purpose: >
+  Real-time emotion / engagement / fatigue tracking for office workers
+  during virtual meetings, surfaced to managers as an aggregated team
+  wellbeing dashboard.
+
+system_description: >
+  Webcam stream during scheduled meetings is processed by a VLM that
+  infers emotional state (engagement, frustration, fatigue) per
+  participant. Per-employee emotion vectors are aggregated into team-
+  level dashboards visible to people-managers. No medical claim is
+  made; the system is marketed as "wellbeing analytics", not as a
+  medical / safety tool. There is no explicit safety use-case (e.g.
+  drowsiness detection in heavy-machinery operators) — the deployment
+  is regular knowledge-worker meetings.
+
+deployment_jurisdictions: ["EU"]
+output_consumed_in_eu: true
+
+subject_population:
+  categories: ["workers"]
+  notes: >
+    Adult employees of the deploying organisation. Power asymmetry:
+    employees cannot meaningfully refuse without career consequence,
+    which is the central reason Article 5(1)(f) carves workplace
+    emotion-recognition into the prohibited list.
+
+inputs:
+  biometric: true                       # facial expression IS biometric
+  facial_images: true                   # webcam frames
+  emotional_state_inference: true       # the headline capability
+  behaviour_history: true               # builds per-employee emotion
+                                        # baseline over time
+  scraped_internet_data: false
+  freetext_prompts: false
+  other: null
+
+outputs:
+  individual_scores: false              # the system surfaces emotion
+                                        # vectors and team aggregates,
+                                        # not numerical scores about
+                                        # individuals — kept false to
+                                        # isolate the 5(1)(f) signal
+                                        # in the screen output
+  behaviour_predictions: false
+  criminal_risk_predictions: false
+  emotion_inferences: true              # the prohibited output
+  sensitive_attribute_classifications: false
+  freetext_generations: false
+  other: "team-level aggregate wellbeing dashboard"
+
+deployment_context:
+  workplace: true                       # the prohibition trigger
+  education: false
+  public_space: false
+  real_time_operation: true
+  law_enforcement_use: false
+  healthcare: false                     # NOT a medical / safety carve-out
+  financial_services: false
+  other: null
+
+# Note: mitigations DO NOT rescue an Article 5 prohibition. Once a
+# system meets the "emotion recognition + workplace + not medical/safety"
+# triple, no amount of consent, opt-out, or aggregation cures the
+# illegality. The right answer is to redesign or withdraw.
+mitigations:
+  - "Pseudonymised employee IDs in the dashboard layer (DOES NOT cure 5(1)(f))"
+  - "Opt-out toggle in employee settings (DOES NOT cure 5(1)(f); EDPB has been clear that workplace consent is rarely freely given)"
+  - "Data deleted after 90 days (DOES NOT cure 5(1)(f); the prohibition is on the practice, not on retention)"
+
+metadata:
+  last_reviewed: 2026-04-28
+  owner: "VP Product, MoodSync Technologies GmbH"
+  reviewed_by: "External counsel (Smith & Co LLP) advised: redesign required"

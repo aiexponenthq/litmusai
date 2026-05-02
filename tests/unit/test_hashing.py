@@ -90,3 +90,43 @@ class TestSha256Hash:
         h = sha256_hash(minimal_system_dict)
         assert len(h) == 64
         assert sha256_hash(minimal_system_dict) == h
+
+
+class TestDateSerialization:
+    """Regression: hashing must support `date` and `datetime` objects.
+
+    Pydantic's SystemDescription.metadata.last_reviewed is typed as `date`,
+    so a real-world system.yaml that populates it produces a `date` object
+    inside the canonical-JSON pipeline after `model_dump()`. Previously
+    this raised "TypeError: Object of type date is not JSON serializable"
+    and broke the screener for any input that used the metadata field.
+    """
+
+    def test_date_in_dict_serializes_iso(self) -> None:
+        from datetime import date
+
+        result = canonical_json({"d": date(2026, 4, 28)})
+        assert result == '{"d":"2026-04-28"}'
+
+    def test_datetime_in_dict_serializes_iso(self) -> None:
+        from datetime import datetime
+
+        result = canonical_json({"t": datetime(2026, 4, 28, 12, 30, 0)})
+        assert result == '{"t":"2026-04-28T12:30:00"}'
+
+    def test_date_hash_is_stable(self) -> None:
+        from datetime import date
+
+        h1 = sha256_hash({"reviewed": date(2026, 4, 28)})
+        h2 = sha256_hash({"reviewed": date(2026, 4, 28)})
+        assert h1 == h2
+        assert len(h1) == 64
+
+    def test_unsupported_type_still_raises(self) -> None:
+        import pytest
+
+        class Custom:
+            pass
+
+        with pytest.raises(TypeError, match="not JSON serializable"):
+            canonical_json({"x": Custom()})
