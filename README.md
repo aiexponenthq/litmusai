@@ -6,7 +6,7 @@
 <p align="center"><em>Free, deterministic Article 5 screener for the EU AI Act.</em></p>
 
 <p align="center">
-  <a href="https://pypi.org/project/litmusai/"><img src="https://img.shields.io/pypi/v/litmusai.svg" alt="PyPI"></a>
+  <a href="https://pypi.org/project/litmus-screener/"><img src="https://img.shields.io/pypi/v/litmus-screener.svg" alt="PyPI"></a>
   <a href="https://github.com/aiexponenthq/litmusai/actions"><img src="https://github.com/aiexponenthq/litmusai/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-0D5463.svg" alt="License: Apache 2.0"></a>
   <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.11%2B-0D5463.svg" alt="Python 3.11+"></a>
@@ -32,7 +32,7 @@ Built by [AI Exponent LLC](https://aiexponent.com). Apache 2.0. Runs entirely of
 ## Quick Start
 
 ```bash
-pip install litmusai
+pip install litmus-screener   # the brand is "LitmusAI"; the PyPI distribution is "litmus-screener"
 ```
 
 ```bash

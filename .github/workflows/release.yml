@@ -73,7 +73,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/litmusai
+      url: https://pypi.org/p/litmus-screener
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -83,9 +83,9 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         # Trusted-publishing config required on PyPI side:
         #   pypi.org/manage/account/publishing → Add pending publisher
-        #   project name: litmusai
+        #   project name: litmus-screener      (PyPI distribution; brand is "LitmusAI")
         #   owner: aiexponenthq
-        #   repository: litmusai
+        #   repository: litmusai               (GitHub repo; product brand)
         #   workflow: release.yml
         #   environment: pypi
 

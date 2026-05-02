@@ -41,7 +41,7 @@ runs:
 
     - name: Install LitmusAI
       shell: bash
-      run: pip install litmusai
+      run: pip install litmus-screener
 
     - name: Run screening
       id: screen

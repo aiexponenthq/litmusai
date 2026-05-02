@@ -20,7 +20,7 @@ jobs:
 ## CLI in any CI
 
 ```bash
-pip install litmusai
+pip install litmus-screener
 litmus screen system.yaml --fail-on red --output report.json --quiet
 ```
 

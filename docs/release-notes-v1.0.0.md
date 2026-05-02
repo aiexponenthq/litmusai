@@ -59,7 +59,7 @@ A future `ruleset-2024-1689-v1.1` release will land `legal_status: REVIEWED` onc
 ## Install
 
 ```bash
-pip install litmusai
+pip install litmus-screener   # the brand is "LitmusAI"; the PyPI distribution is "litmus-screener"
 ```
 
 ```bash

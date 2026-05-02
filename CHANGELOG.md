@@ -39,7 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **SARIF 2.1.0** output mapping each Article 5 sub-point to a SARIF rule ID — compatible with GitHub Advanced Security, GitLab SAST, Azure DevOps Advanced Security (FR-29)
 - **Markdown** export for human-readable governance reports
-- **PDF** export via WeasyPrint (optional extra: `pip install litmusai[pdf]`)
+- **PDF** export via WeasyPrint (optional extra: `pip install litmus-screener[pdf]`)
 
 ### Added — BYO-ruleset
 
@@ -72,5 +72,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Notes
 
+- **Distribution name vs brand name.** The product brand is **LitmusAI**. The PyPI distribution is **`litmus-screener`** because `litmus-ai` and `litmusai` were already taken on PyPI by an unrelated AI project ("Litmus AI" hallucination-detection SDK). Install command: `pip install litmus-screener`. The CLI entry point is still `litmus`, the Python module is still `litmusai`, the GitHub repo is still `aiexponenthq/litmusai`. Same pattern as `pip install torch` for PyTorch.
 - **Legal-review status: UNREVIEWED.** External lawyer review is **not** a release blocker per the project's published acceptance criteria (PRD §NFR-10). The package ships with conservative-by-default verdicts, prominent `UNREVIEWED` disclaimers on every distribution surface, and a Bring-Your-Own-Ruleset mechanism so customers with their own counsel can supply a signed ruleset today. A future `ruleset-2024-1689-v1.1` release will bump the ruleset's `legal_status` to `REVIEWED`; the LitmusAI package version (`1.0.x`) tracks API stability and will not bump for that change.
 - **Not legal advice. Not a notified body.** Apache 2.0. AS IS.

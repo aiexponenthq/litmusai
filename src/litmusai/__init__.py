@@ -9,8 +9,12 @@ ruleset authored by the AiExponent internal compliance panel. See
 
 from importlib.metadata import PackageNotFoundError, version
 
+# The PyPI distribution name is `litmus-screener` (the brand is "LitmusAI";
+# the distribution name differs because `litmus-ai` was already taken on
+# PyPI by an unrelated project). The Python module stays `litmusai` and
+# the CLI command stays `litmus`.
 try:
-    __version__ = version("litmusai")
+    __version__ = version("litmus-screener")
 except PackageNotFoundError:  # pragma: no cover — editable/dev install
     __version__ = "0.0.0+local"
 

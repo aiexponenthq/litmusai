@@ -3,8 +3,10 @@
 ## Installation
 
 ```bash
-pip install litmusai
+pip install litmus-screener
 ```
+
+The product brand is **LitmusAI**; the PyPI distribution name is `litmus-screener` (PEP 541 collision with an unrelated package on `litmus-ai` / `litmusai`). After install the CLI entry point is `litmus` and the Python module is `litmusai`.
 
 Requires Python 3.11+. No API keys, no sign-ups, no network access.
 
