@@ -12,7 +12,16 @@
   <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.11%2B-0D5463.svg" alt="Python 3.11+"></a>
   <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689"><img src="https://img.shields.io/badge/EU%20AI%20Act-Article%205-0D5463.svg" alt="EU AI Act Article 5"></a>
   <a href="#privacy"><img src="https://img.shields.io/badge/telemetry-zero-0B7A4B.svg" alt="Zero telemetry"></a>
+  <a href="#legal-review-status"><img src="https://img.shields.io/badge/ruleset_legal_status-UNREVIEWED-B68A2E.svg" alt="Ruleset legal status: UNREVIEWED"></a>
 </p>
+
+---
+
+> **LitmusAI 1.0.0 ships with the AiExponent reference ruleset (UNREVIEWED — internal panel authored, no external lawyer review). Apache 2.0, AS IS.**
+>
+> The package's CLI surface, JSON/SARIF schema, and BYO-ruleset contract are stable for production integration. The reference ruleset has been authored and reviewed by an internal AiExponent panel (six engineering + governance roles) but has **not** been reviewed by a qualified EU AI Act practising lawyer. Every screening report carries this disclosure prominently. Customers who require lawyer-reviewed output can supply their own signed ruleset via the BYO mechanism — see [`docs/ruleset-authoring.md`](docs/ruleset-authoring.md).
+>
+> A full external legal review will land in a `ruleset-2024-1689-v1.1` release with `legal_status: REVIEWED`. Tracked under [Legal review status](#legal-review-status) below.
 
 ---
 
@@ -111,11 +120,17 @@ graph LR
 
 ## Important Disclaimers
 
+<a name="legal-review-status"></a>
+
+### Legal review status
+
 > **UNREVIEWED REFERENCE RULESET**
 >
-> The default LitmusAI ruleset (`aiexponent-reference-v1.0`) is a good-faith engineering interpretation of Article 5, authored by AiExponent's internal compliance panel. **It has not been reviewed or signed by a qualified EU AI Act lawyer and is not legal advice.**
+> The default LitmusAI ruleset (`ruleset-2024-1689-v1.0`) is a good-faith engineering interpretation of Article 5, authored by AiExponent's internal compliance panel. **It has not been reviewed or signed by a qualified EU AI Act lawyer and is not legal advice.**
 >
-> If your organisation needs a lawyer-signed ruleset, see [docs/ruleset-authoring.md](docs/ruleset-authoring.md) for the BYO-ruleset path.
+> A full external legal review will land in a future `ruleset-2024-1689-v1.1` release with `legal_status: REVIEWED` and a SIGNED provenance header. The package version (`litmusai 1.0.0`) reflects API stability — the legal-review status rides on the ruleset version + the explicit `ruleset_legal_status: UNREVIEWED` line printed by `litmus version`.
+>
+> If your organisation needs a lawyer-signed ruleset today, see [docs/ruleset-authoring.md](docs/ruleset-authoring.md) for the BYO-ruleset path. A complete dummy-signed example ships in `tests/fixtures/rulesets/acme-corp-signed-v1.0.json`.
 >
 > Every screening is a screening, not a certification. **Not legal advice. Not a notified body.**
 
