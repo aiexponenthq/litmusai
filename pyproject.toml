@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "litmusai"
-version = "0.1.0.dev0"
+version = "1.0.0"
 description = "Free, deterministic, CLI screener for Article 5 of the EU AI Act (Regulation (EU) 2024/1689)."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -22,7 +22,7 @@ keywords = [
     "prohibited-ai-practices",
 ]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
     "Intended Audience :: Developers",
     "Intended Audience :: Legal Industry",
@@ -75,9 +75,10 @@ Changelog = "https://github.com/aiexponenthq/litmusai/blob/main/CHANGELOG.md"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/litmusai"]
-
-[tool.hatch.build.targets.wheel.force-include]
-"src/litmusai/_data" = "litmusai/_data"
+# `_data` (rulesets + JSON schemas) lives inside the litmusai/ package
+# directory, so `packages = ["src/litmusai"]` already ships it. A
+# previous `force-include` block here duplicated the same files into
+# the wheel and produced "Duplicate name" warnings during build.
 
 [tool.hatch.build.targets.sdist]
 include = [

@@ -1,0 +1,129 @@
+name: Release
+
+# Trigger: pushing a tag matching v*.*.* (e.g. v1.0.0, v1.0.1, v1.1.0).
+# This workflow:
+#   1. Re-runs the full quality-gate suite as a guard
+#   2. Builds wheel + sdist via hatch
+#   3. Publishes to PyPI using OIDC trusted-publishing (no API tokens)
+#   4. Cuts a GitHub release with the artefacts attached, using
+#      docs/release-notes-v<version>.md as the body when present.
+#
+# Security note: github.ref_name is funnelled through env: in every step,
+# never inlined into run: commands. Tag names are validated by Git but
+# the env: pattern is the recommended hygiene per
+# https://github.blog/security/vulnerability-research/how-to-catch-github-actions-workflow-injections-before-attackers-do/
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write   # cut GitHub releases
+  id-token: write   # mint OIDC token for PyPI trusted-publisher
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  guard:
+    name: Re-run quality gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -e ".[dev]"
+      - run: ruff check src/ tests/
+      - run: ruff format --check src/ tests/
+      - run: mypy --strict src/
+      - name: Run tests with sockets disabled (NFR-8)
+        run: pytest tests/ --disable-socket --cov --cov-report=term-missing -v
+
+  build:
+    name: Build sdist + wheel
+    needs: guard
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install build tooling
+        run: pip install build
+      - name: Build distributions
+        run: python -m build
+      - name: Verify the wheel installs cleanly + CLI runs
+        run: |
+          python -m venv /tmp/smoke-env
+          /tmp/smoke-env/bin/pip install dist/*.whl
+          /tmp/smoke-env/bin/litmus --version
+          /tmp/smoke-env/bin/litmus screen --describe "a calculator app for adults"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish-to-pypi:
+    name: Publish to PyPI (OIDC trusted-publisher)
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/litmusai
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Publish via OIDC (no API tokens)
+        uses: pypa/gh-action-pypi-publish@release/v1
+        # Trusted-publishing config required on PyPI side:
+        #   pypi.org/manage/account/publishing → Add pending publisher
+        #   project name: litmusai
+        #   owner: aiexponenthq
+        #   repository: litmusai
+        #   workflow: release.yml
+        #   environment: pypi
+
+  github-release:
+    name: Cut GitHub release
+    needs: publish-to-pypi
+    runs-on: ubuntu-latest
+    env:
+      # Funnel the tag through env so it never lands inline in run: scripts.
+      TAG_NAME: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Resolve release-note body
+        id: notes
+        run: |
+          set -euo pipefail
+          # Strip the leading "v" from the tag to find docs/release-notes-vX.Y.Z.md.
+          # TAG_NAME comes from the env block above, never inlined.
+          VERSION="${TAG_NAME#v}"
+          NOTES_FILE="docs/release-notes-v${VERSION}.md"
+          if [[ -f "$NOTES_FILE" ]]; then
+            echo "notes_path=$NOTES_FILE" >> "$GITHUB_OUTPUT"
+            echo "release_name=${TAG_NAME} — Article 5 screener (UNREVIEWED ruleset, internal panel authored)" >> "$GITHUB_OUTPUT"
+            echo "Found release notes at $NOTES_FILE"
+          else
+            echo "notes_path=" >> "$GITHUB_OUTPUT"
+            echo "release_name=${TAG_NAME}" >> "$GITHUB_OUTPUT"
+            echo "::warning::No release-notes file at $NOTES_FILE — using auto-generated notes"
+          fi
+      - name: Cut GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ steps.notes.outputs.release_name }}
+          body_path: ${{ steps.notes.outputs.notes_path }}
+          generate_release_notes: ${{ steps.notes.outputs.notes_path == '' }}
+          files: dist/*
+          fail_on_unmatched_files: true
