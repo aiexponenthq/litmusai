@@ -32,7 +32,14 @@ def debug(
     for cat_id, cat in data.get("categories", {}).items():
         verdict = cat.get("verdict", "?")
         style = {"red": "bold red", "amber": "yellow", "clear": "green"}.get(verdict, "")
-        console.print(f"[{style}]{cat_id} — {cat.get('label', '')} → {verdict.upper()}[/{style}]")
+        # ASCII "--" / "->" instead of unicode em-dash and arrow so output
+        # is safe on Windows consoles still defaulting to cp1252 (rich
+        # falls back to legacy_windows_render which raises
+        # UnicodeEncodeError on non-cp1252 chars). Identical rendering on
+        # UTF-8 terminals; no visual regression on macOS / Linux.
+        console.print(
+            f"[{style}]{cat_id} -- {cat.get('label', '')} -> {verdict.upper()}[/{style}]",
+        )
         if cat.get("triggered_rules"):
             for rule_id in cat["triggered_rules"]:
                 console.print(f"  [dim]triggered:[/dim] {rule_id}")

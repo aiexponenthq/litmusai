@@ -44,14 +44,25 @@ _EXPECTED_VERDICTS: dict[str, str] = {
 
 
 def _run(*args: str, cwd: Path | None = None, **kwargs: object) -> subprocess.CompletedProcess:  # type: ignore[type-arg]
-    """Run litmusai as a subprocess and return the CompletedProcess."""
+    """Run litmusai as a subprocess and return the CompletedProcess.
+
+    Forces PYTHONIOENCODING=utf-8 + encoding="utf-8" on the captured
+    streams so Windows runners (whose default console codepage is
+    cp1252) don't choke on any unicode the CLI may emit. Linux/macOS
+    runners default to UTF-8 already; this is a no-op there.
+    """
+    import os
+
     cmd = [sys.executable, "-m", "litmusai", *args]
+    env = {**os.environ, "PYTHONIOENCODING": "utf-8"}
     return subprocess.run(
         cmd,
         capture_output=True,
         text=True,
+        encoding="utf-8",
         timeout=60,
         cwd=cwd,
+        env=env,
         **kwargs,  # type: ignore[arg-type]
     )
 
